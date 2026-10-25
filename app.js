@@ -29,8 +29,8 @@ swEl.oninput=clip;map.on('move zoom moveend zoomend',clip);
 const fpG=L.layerGroup().addTo(map),fpL={};
 all.filter(f=>f.geo).forEach(f=>{const pg=L.polygon(f.geo.foot.map(p=>[p[1],p[0]]),{color:'#fff',weight:1.5,dashArray:'4 4',fill:true,fillOpacity:0,interactive:true}).bindTooltip(label(f),{sticky:true,className:'ft'}).on('click',()=>show(f));pg.addTo(fpG);fpL[f.n]=pg;});
 document.getElementById('fp').onchange=e=>e.target.checked?fpG.addTo(map):map.removeLayer(fpG);
-const go={north:[[51.08,-4.25],[51.185,-4.17]]};
-const q=new URLSearchParams(location.search);if(q.get('v')){const v=q.get('v').split(',').map(Number);map.setView([v[0],v[1]],v[2],{animate:false});}else map.fitBounds(go.north);if(q.get('sw'))swEl.value=q.get('sw');if(q.get('b')&&base[q.get('b')]){map.removeLayer(cur);cur=base[q.get('b')].addTo(map);const rb=document.querySelector('input[name=base][value='+q.get('b')+']');if(rb)rb.checked=true;}setTimeout(clip,500);
+const fb=()=>{const b=L.latLngBounds([]);all.filter(f=>f.geo).forEach(f=>b.extend(f.geo.bounds));map.fitBounds(b,{padding:[12,12]});};
+const q=new URLSearchParams(location.search);if(q.get('v')){const v=q.get('v').split(',').map(Number);map.setView([v[0],v[1]],v[2],{animate:false});}else{fb();let rt,lw=innerWidth;window.addEventListener('resize',()=>{if(innerWidth===lw)return;lw=innerWidth;clearTimeout(rt);rt=setTimeout(()=>{map.invalidateSize();fb();},200);});}if(q.get('sw'))swEl.value=q.get('sw');if(q.get('b')&&base[q.get('b')]){map.removeLayer(cur);cur=base[q.get('b')].addTo(map);const rb=document.querySelector('input[name=base][value='+q.get('b')+']');if(rb)rb.checked=true;}setTimeout(clip,500);
 function show(f){document.getElementById('framecard').innerHTML=`<b>${label(f)}</b><br>Gauge model: ${f.gauge}${f.interp?' · time interpolated between neighbouring clock readings':''}<br>
 Astronomical tide (1940 sea level): <b>${f.astro.toFixed(2)} m</b><br>Best 1940 estimate incl. −0.17 m surge: <b>${f.best.toFixed(2)} m ODN</b><br>Same tide today (+0.20 m sea level): <b>${f.today.toFixed(2)} m ODN</b>${f.geo?'':'<br><i>Not georeferenced; not on the map.</i>'}
 <br><a href="https://catalog.archives.gov/id/214920619" target="_blank" rel="noopener noreferrer">Original at NARA</a>`;
@@ -43,9 +43,9 @@ function axes(svg,W,H,m,xs,ys,xt,yt,xf,yf,xl,yl){yt.forEach(v=>{el('line',{x1:m.
  el('text',{x:10,y:(m.t+H-m.b)/2,'text-anchor':'middle','font-size':10,fill:'#333',transform:`rotate(-90 10 ${(m.t+H-m.b)/2})`},svg).textContent=yl;}
 // tide chart
 let dots={};
-(function(){const W=460,H=250,m={l:40,r:10,t:10,b:32},x0=6,x1=18,y0=-3.5,y1=4;const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Tide curves'},document.getElementById('tide'));
+(function(){const W=Math.min(460,Math.max(300,document.getElementById('tide').clientWidth||460)),H=250,m={l:40,r:10,t:10,b:32},x0=6,x1=18,y0=-3.5,y1=4;const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Tide curves'},document.getElementById('tide'));
  const xs=v=>m.l+(v-x0)/(x1-x0)*(W-m.l-m.r),ys=v=>m.t+(y1-v)/(y1-y0)*(H-m.t-m.b);
- axes(svg,W,H,m,xs,ys,[6,8,10,12,14,16,18],[-3,-2,-1,0,1,2,3,4],v=>String(v).padStart(2,'0')+':00',v=>v,'BST, 31 Aug 1940','m ODN');
+ axes(svg,W,H,m,xs,ys,W<420?[6,9,12,15,18]:[6,8,10,12,14,16,18],[-3,-2,-1,0,1,2,3,4],v=>String(v).padStart(2,'0')+':00',v=>v,'BST, 31 Aug 1940','m ODN');
  el('rect',{x:xs(12.3),y:m.t,width:xs(13)-xs(12.3),height:H-m.t-m.b,fill:'#fff3d6'},svg);
  [['ilf','#1d6fb8','Ilfracombe']].forEach(([k,c,n],i)=>{let d='';S.curve.t.forEach((t,j)=>{if(t>=x0&&t<=x1)d+=(d?'L':'M')+xs(t).toFixed(1)+','+ys(S.curve[k][j]).toFixed(1);});el('path',{d,fill:'none',stroke:c,'stroke-width':2},svg);
   el('text',{x:W-m.r-4,y:m.t+12+i*13,'text-anchor':'end','font-size':10,fill:c},svg).textContent=n;});
@@ -54,7 +54,7 @@ let dots={};
  el('text',{x:xs(12.65),y:H-m.b-4,'text-anchor':'middle','font-size':9,fill:'#a06b00'},svg).textContent='photos';})();
 function hl(n){Object.entries(dots).forEach(([k,c])=>c.setAttribute('r',+k===n?7:4));}
 // series chart
-(function(){const W=460,H=260,m={l:40,r:10,t:10,b:32},x0=1938,x1=2028,y0=-0.9,y1=0.9;const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Waterline timeline'},document.getElementById('series'));
+(function(){const W=Math.min(460,Math.max(300,document.getElementById('series').clientWidth||460)),H=W<420?280:260,m={l:40,r:10,t:10,b:32},x0=1938,x1=2028,y0=-0.9,y1=0.9;const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Waterline timeline'},document.getElementById('series'));
  const xs=v=>m.l+(v-x0)/(x1-x0)*(W-m.l-m.r),ys=v=>m.t+(y1-v)/(y1-y0)*(H-m.t-m.b);
  axes(svg,W,H,m,xs,ys,[1940,1960,1980,2000,2020],[-0.8,-0.4,0,0.4,0.8],String,v=>v.toFixed(1),'Year','waterline − tide (m)');
  el('line',{x1:m.l,x2:W-m.r,y1:ys(0),y2:ys(0),stroke:'#888'},svg);
@@ -62,7 +62,7 @@ function hl(n){Object.entries(dots).forEach(([k,c])=>c.setAttribute('r',+k===n?7
  S.series.forEach(r=>{const [c,sh]=st[r.site+'|'+r.kind],x=xs(r.yr),y=ys(r.res);const e=sh==='c'?el('circle',{cx:x,cy:y,r:3,fill:c,'fill-opacity':.7},svg):el('rect',{x:x-2.6,y:y-2.6,width:5.2,height:5.2,fill:'none',stroke:c},svg);
   el('title',{},e).textContent=`${r.site} ${r.kind} ${r.utc} UTC, ${r.mlw} min after low water (rising), range ${r.rng} m, tide ${r.tide} m, residual ${r.res.toFixed(2)} m`;});
  S.w1940.forEach(v=>{el('text',{x:xs(1940.7),y:ys(v)+4,'text-anchor':'middle','font-size':13,fill:'#e3262b'},svg).textContent='★';});
- [['● Sentinel-2','#333'],['□ Landsat','#333'],['Woolacombe','#1d6fb8'],['Saunton','#2a9d58'],['★ 1940 photo','#e3262b']].forEach(([t,c],i)=>el('text',{x:m.l+6+i*80,y:m.t+10,'font-size':10,fill:c},svg).textContent=t);})();
+ [['● Sentinel-2','#333'],['□ Landsat','#333'],['Woolacombe','#1d6fb8'],['Saunton','#2a9d58'],['★ 1940 photo','#e3262b']].forEach(([t,c],i)=>el('text',W<420?{x:m.l+6+(i%3)*90,y:m.t+10+Math.floor(i/3)*12,'font-size':10,fill:c}:{x:m.l+6+i*80,y:m.t+10,'font-size':10,fill:c},svg).textContent=t);})();
 document.getElementById('stats').innerHTML=`<table><tr><th>Site</th><th>Median (IQR)</th><th>Trend 1985–2023</th></tr>
 <tr><td>Woolacombe (13 scenes)</td><td>−0.08 (−0.13 to +0.05) m</td><td>+2.2 ± 5.0 mm/yr</td></tr><tr><td>Saunton (14 scenes)</td><td>+0.16 (0.00 to +0.27) m</td><td>−7.8 ± 5.1 mm/yr</td></tr>
 <tr><td>Woolacombe 1940 photo</td><td>−0.19 (−0.41 to +0.15) m</td><td>north end of the beach only</td></tr></table><p class="cap">No measurable trend: a real rise of about 3 mm/yr is swamped by waves, beach changes and 10–30 m pixels.</p>`;
