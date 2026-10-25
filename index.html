@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Devon coast, 31 August 1940: tide and sea level from a Luftwaffe sortie</title>
+<meta name="description" content="Luftwaffe reconnaissance photos of the Devon coast, timed to the minute, georeferenced against modern LiDAR and satellite imagery.">
+<link rel="stylesheet" href="lib/leaflet.css"><link rel="stylesheet" href="style.css">
+</head><body>
+<header><h1>The Devon coast at 12:44 BST, 31 August 1940</h1><p>Luftwaffe sortie GX 10006 SD, timed to the minute, set against today's tide, LiDAR and satellites</p></header>
+<main>
+<section id="mapwrap">
+ <div id="map"></div>
+ <div id="ctrl">
+  <div class="row"><b>Area</b> <button data-go="north">Woolacombe &amp; Saunton</button> <button data-go="south">Plymouth Sound &amp; Rame</button></div>
+  <div class="row"><b>Modern base</b>
+   <label><input type="radio" name="base" value="s2t" checked> Sentinel-2, 27 Sep 2018 at 12:21 BST (low tide)</label>
+   <label><input type="radio" name="base" value="eox"> Sentinel-2 cloudless 2016</label>
+   <label><input type="radio" name="base" value="osm"> OpenStreetMap</label></div>
+  <div class="row"><label for="op"><b>1940 photo opacity</b></label> <input id="op" type="range" min="0" max="100" value="85"></div>
+  <div class="row"><label for="sw"><b>Swipe</b> (1940 on the left)</label> <input id="sw" type="range" min="0" max="100" value="100"></div>
+  <div class="row"><b>LiDAR contours</b>
+   <label><input type="checkbox" data-c="y1940" checked> <i class="sw r"></i>1940 water level</label>
+   <label><input type="checkbox" data-c="today" checked> <i class="sw y"></i>same tide today (+0.20 m)</label>
+   <label><input type="checkbox" data-c="odn0"> <i class="sw b"></i>0 m ODN</label>
+   <label><input type="checkbox" id="fp" checked> footprints</label></div>
+ </div>
+</section>
+<section id="panel">
+ <h2>Tide on 31 August 1940</h2>
+ <div id="tide" class="chart"></div>
+ <p class="cap">Predicted tide in BST, metres relative to Ordnance Datum Newlyn, at 1940 mean sea level and without surge. Dots mark the photos; tap one to zoom to it.</p>
+ <div id="framecard" class="card">Tap a footprint or a dot on the tide chart.</div>
+ <h2>Waterline timeline 1985–2026</h2>
+ <div id="series" class="chart"></div>
+ <p class="cap">Each dot is one Landsat or Sentinel-2 scene taken at a similar tide (−2.45 to −1.80 m). The value is the LiDAR height at the detected water edge minus the predicted tide, so 0 means the water was exactly where the tide model said. Stars are the 1940 Woolacombe photo at three water-edge thresholds.</p>
+ <div id="stats"></div>
+</section>
+<section id="story">
+ <h2>The story</h2>
+ <p>On the afternoon of 31 August 1940, a Luftwaffe reconnaissance aircraft flew along the Devon coast taking vertical photographs. Each frame shows the camera's clock. The clock ran on German summer time, one hour ahead of British Summer Time, so the frame of Woolacombe Sands reading 13:44 was taken at <b>12:44 BST</b>.</p>
+ <p>Knowing the minute lets us work out the tide. Low water that day was about 11:15 BST at Ilfracombe and 11:05 BST at Devonport. Every coastal frame therefore caught a tide that was rising by 1–2 cm a minute. The prediction comes from a full year of modern tide-gauge data. It is checked against Newlyn's real hourly record from 1940, which also shows the sea that afternoon running about 17 cm below the prediction, probably because of the weather. At Woolacombe at 12:44 the sea stood at about <b>−2.5 m</b> relative to Ordnance Datum.</p>
+ <p>Since 1940, mean sea level at Newlyn has risen about <b>20 cm</b> (about 2 mm a year). Fitting the photos to modern Environment Agency LiDAR lets us draw where the water would reach at the same point in the tide today: the yellow line.</p>
+ <h3>What it shows, honestly</h3>
+ <ul>
+  <li>On a gently sloping beach like Woolacombe, 20 cm of rise should move the waterline only about <b>8 m</b> landward (about 20 m at Saunton). On the rocky coast at Rame, the 1940 and today lines are 1–2 m apart, which is smaller than the 5–6 m accuracy of fitting the photos to the map.</li>
+  <li>The 1940 water edge at Woolacombe falls inside the spread of 40 years of satellite waterlines taken at the same tide. Along the beach it is up to about 100 m seaward at the south end and landward at the north end, which looks like sand being redistributed over 80 years. That change is much bigger than the sea-level signal.</li>
+  <li>On 1940 film, wet sand and shallow water look alike. Depending on the threshold, the picked water edge moves by up to 50 m.</li>
+  <li><b>Bottom line:</b> the photos are consistent with the measured 20 cm rise but cannot prove it on their own. The proof comes from tide gauges such as Newlyn. The photos show what that rise means on the ground: small on rock, and lost among beach changes on sand.</li>
+ </ul>
+ <h3>Method and limits</h3>
+ <ul>
+  <li><b>Tides:</b> UTide harmonic fits to 2019 hourly data from Ilfracombe and Devonport (GESLA-4.1), converted to ODN. Tested against an independent 2018 fortnight at Ilfracombe: 0.20 m rms overall, 0.11 m near low water. A fit to Newlyn's 1940 record reproduces it to 0.13 m. The −0.17 m Newlyn surge was applied to all frames.</li>
+  <li><b>Photos:</b> fitted to the British National Grid by feature matching (SIFT and RANSAC homographies). Typical accuracy is about 5.5 m rms; frame 76 is about 11 m. A homography treats the ground as flat, so cliff tops can be displaced. Frames 2–8, 70–72 and 75 could not be fitted automatically and are not shown on the map. Frames 80, 82, 83, 119, 120 and 122 have interpolated times (marked ≈).</li>
+  <li><b>Contours:</b> Environment Agency LiDAR Composite DTM, 2 m. Levels: north −2.49 / −2.29 / 0 m; south −0.94 / −0.74 / 0 m ODN, which are the mean best-estimate 1940 levels for each set of frames. Today's LiDAR shows today's beach, not the 1940 one.</li>
+  <li><b>Satellite base map:</b> Sentinel-2 on 27 Sep 2018 at 12:21 BST, when the tide was −2.18 m at Woolacombe and −1.13 m at Plymouth: a similar point in the tide to 1940, 78 years later. It has 10 m pixels.</li>
+ </ul>
+</section>
+<section id="sources">
+ <h2>Sources, credits and licences</h2>
+ <ul>
+  <li><b>1940 photographs:</b> U.S. National Archives and Records Administration, Record Group 373 (Records of the Defense Intelligence Agency), series <a href="https://catalog.archives.gov/id/306065" target="_blank" rel="noopener noreferrer">German Flown Aerial Photographs</a>, file unit <a href="https://catalog.archives.gov/id/214920619" target="_blank" rel="noopener noreferrer">GX 10006 SD</a>, e.g. <a href="https://catalog.archives.gov/id/220898445" target="_blank" rel="noopener noreferrer">Exposure 81</a>. The catalogue lists access and use as <i>Unrestricted</i>. These are captured German wartime records; credit: "U.S. National Archives, RG 373". The images here are reprojected, downsampled derivatives.</li>
+  <li>The UK's <a href="https://ncap.org.uk/" target="_blank" rel="noopener noreferrer">National Collection of Aerial Photography (NCAP)</a> holds related German and Allied reconnaissance collections. No NCAP-hosted images are used here; NCAP copies carry their own licence terms.</li>
+  <li><b>Tide gauges:</b> <a href="https://gesla787883612.wordpress.com/" target="_blank" rel="noopener noreferrer">GESLA-4.1</a> (Haigh et al. 2023), via the <a href="https://uhslc.soest.hawaii.edu/erddap/tabledap/global_hourly_gesla.html" target="_blank" rel="noopener noreferrer">UHSLC ERDDAP</a>. UK records are from the British Oceanographic Data Centre / National Tide Gauge Network. Mean sea level trend from <a href="https://psmsl.org/data/obtaining/stations/202.php" target="_blank" rel="noopener noreferrer">PSMSL Newlyn</a>.</li>
+  <li><b>LiDAR:</b> <a href="https://environment.data.gov.uk/dataset/13787b9a-26a4-4775-8523-806d13af58fc" target="_blank" rel="noopener noreferrer">Environment Agency LiDAR Composite DTM</a>. © Environment Agency copyright and/or database right. Open Government Licence v3.0.</li>
+  <li><b>Satellites:</b> contains modified Copernicus Sentinel data 2017–2026; Landsat imagery courtesy of the U.S. Geological Survey. Accessed through <a href="https://planetarycomputer.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Planetary Computer</a>.</li>
+  <li><b>Base maps:</b> <a href="https://s2maps.eu" target="_blank" rel="noopener noreferrer">Sentinel-2 cloudless 2016 by EOX IT Services GmbH</a> (CC BY 4.0); © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a> (ODbL).</li>
+  <li><b>Software:</b> <a href="https://leafletjs.com" target="_blank" rel="noopener noreferrer">Leaflet</a> (BSD-2), UTide, OpenCV, GDAL.</li>
+ </ul>
+</section>
+</main>
+<footer>An independent study. Tide values are model estimates with about ±0.15 m uncertainty. Not for navigation.</footer>
+<script src="lib/leaflet.js"></script><script src="data/data.js"></script><script src="app.js"></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "58b969f399674dbba95a82ee3f5486aa"}'></script>
+</body></html>
