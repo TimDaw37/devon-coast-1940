@@ -68,5 +68,5 @@ function hl(n){Object.entries(dots).forEach(([k,c])=>c.setAttribute('r',+k===n?7
  [['● Sentinel-2','#333'],['□ Landsat','#333'],['Woolacombe','#1d6fb8'],['Saunton','#2a9d58'],['★ 1940 photo','#e3262b']].forEach(([t,c],i)=>el('text',{x:m.l+6+i*80,y:m.t+10,'font-size':10,fill:c},svg).textContent=t);})();
 document.getElementById('stats').innerHTML=`<table><tr><th>Site</th><th>Median (IQR)</th><th>Trend 1985–2023</th></tr>
 <tr><td>Woolacombe (13 scenes)</td><td>−0.08 (−0.13 to +0.05) m</td><td>+2.2 ± 5.0 mm/yr</td></tr><tr><td>Saunton (14 scenes)</td><td>+0.16 (0.00 to +0.27) m</td><td>−7.8 ± 5.1 mm/yr</td></tr>
-<tr><td>Woolacombe 1940 (frame 78, re-fitted)</td><td>−0.19 (−0.41 to +0.15) m</td><td>north end of the beach only</td></tr></table><p class="cap">No measurable trend: a real rise of about 3 mm/yr is swamped by waves, beach changes and 10–30 m pixels.</p>`;
+<tr><td>Woolacombe 1940 photo</td><td>−0.19 (−0.41 to +0.15) m</td><td>north end of the beach only</td></tr></table><p class="cap">No measurable trend: a real rise of about 3 mm/yr is swamped by waves, beach changes and 10–30 m pixels.</p>`;
 })();
