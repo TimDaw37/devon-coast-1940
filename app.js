@@ -16,7 +16,7 @@ const base={
  osm:L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'}),
  eox:L.tileLayer('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/{z}/{y}/{x}.jpg',{maxZoom:17,attribution:'<a href="https://s2maps.eu" target="_blank" rel="noopener noreferrer">Sentinel-2 cloudless 2016 by EOX</a> (CC BY 4.0; contains modified Copernicus Sentinel data 2016)'}),
  s2t:L.layerGroup([L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,opacity:.5,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'}),
-   L.imageOverlay('img/s2_north.webp',S.s2.north,{attribution:'Contains modified Copernicus Sentinel data 2018'}),L.imageOverlay('img/s2_south.webp',S.s2.south)])};
+   L.imageOverlay('img/s2_north.webp',S.s2.north,{attribution:'Contains modified Copernicus Sentinel data 2017, 2021'}),L.imageOverlay('img/s2_south.webp',S.s2.south)])};
 let cur=base.s2t.addTo(map);
 document.querySelectorAll('input[name=base]').forEach(r=>r.onchange=()=>{map.removeLayer(cur);cur=base[r.value].addTo(map);});
 map.attributionControl.addAttribution('1940 photos: <a href="https://catalog.archives.gov/id/214920619" target="_blank" rel="noopener noreferrer">U.S. National Archives, RG 373</a> · LiDAR © Environment Agency (OGL)');
@@ -63,10 +63,10 @@ function hl(n){Object.entries(dots).forEach(([k,c])=>c.setAttribute('r',+k===n?7
  el('line',{x1:m.l,x2:W-m.r,y1:ys(0),y2:ys(0),stroke:'#888'},svg);
  const st={'woolacombe|S2':['#1d6fb8','c'],'woolacombe|Landsat':['#1d6fb8','s'],'saunton|S2':['#2a9d58','c'],'saunton|Landsat':['#2a9d58','s']};
  S.series.forEach(r=>{const [c,sh]=st[r.site+'|'+r.kind],x=xs(r.yr),y=ys(r.res);const e=sh==='c'?el('circle',{cx:x,cy:y,r:3,fill:c,'fill-opacity':.7},svg):el('rect',{x:x-2.6,y:y-2.6,width:5.2,height:5.2,fill:'none',stroke:c},svg);
-  el('title',{},e).textContent=`${r.site} ${r.kind} ${r.utc} UTC, tide ${r.tide} m, residual ${r.res.toFixed(2)} m`;});
+  el('title',{},e).textContent=`${r.site} ${r.kind} ${r.utc} UTC, ${r.mlw} min after low water (rising), range ${r.rng} m, tide ${r.tide} m, residual ${r.res.toFixed(2)} m`;});
  S.w1940.forEach(v=>{el('text',{x:xs(1940.7),y:ys(v)+4,'text-anchor':'middle','font-size':13,fill:'#e3262b'},svg).textContent='★';});
  [['● Sentinel-2','#333'],['□ Landsat','#333'],['Woolacombe','#1d6fb8'],['Saunton','#2a9d58'],['★ 1940 photo','#e3262b']].forEach(([t,c],i)=>el('text',{x:m.l+6+i*80,y:m.t+10,'font-size':10,fill:c},svg).textContent=t);})();
-document.getElementById('stats').innerHTML=`<table><tr><th>Site</th><th>Median (IQR)</th><th>Trend 1985–2026</th></tr>
-<tr><td>Woolacombe</td><td>−0.16 (−0.32 to 0.00) m</td><td>−2.4 ± 3.7 mm/yr</td></tr><tr><td>Saunton</td><td>−0.02 (−0.14 to +0.22) m</td><td>−5.1 ± 3.7 mm/yr</td></tr>
+document.getElementById('stats').innerHTML=`<table><tr><th>Site</th><th>Median (IQR)</th><th>Trend 1985–2023</th></tr>
+<tr><td>Woolacombe (13 scenes)</td><td>−0.08 (−0.13 to +0.05) m</td><td>+2.2 ± 5.0 mm/yr</td></tr><tr><td>Saunton (14 scenes)</td><td>+0.16 (0.00 to +0.27) m</td><td>−7.8 ± 5.1 mm/yr</td></tr>
 <tr><td>Woolacombe 1940 (frame 78, re-fitted)</td><td>−0.19 (−0.41 to +0.15) m</td><td>north end of the beach only</td></tr></table><p class="cap">No measurable trend: a real rise of about 3 mm/yr is swamped by waves, beach changes and 10–30 m pixels.</p>`;
 })();

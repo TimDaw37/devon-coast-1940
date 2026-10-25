@@ -11,7 +11,7 @@
  <div id="ctrl">
   <div class="row"><b>Area</b> <button data-go="north">Woolacombe &amp; Saunton</button> <button data-go="south">Plymouth Sound &amp; Rame</button></div>
   <div class="row"><b>Modern base</b>
-   <label><input type="radio" name="base" value="s2t" checked> Sentinel-2, 27 Sep 2018 at 12:21 BST (low tide)</label>
+   <label><input type="radio" name="base" value="s2t" checked> Sentinel-2, 24 Apr 2021 (north) / 1 Dec 2017 (south), same point in the tide as 1940</label>
    <label><input type="radio" name="base" value="eox"> Sentinel-2 cloudless 2016</label>
    <label><input type="radio" name="base" value="osm"> OpenStreetMap</label></div>
   <div class="row"><label for="op"><b>1940 photo opacity</b></label> <input id="op" type="range" min="0" max="100" value="85"></div>
@@ -26,7 +26,7 @@
  <div id="framecard" class="card">Tap a footprint or a dot on the tide chart.</div>
  <h2>Waterline timeline 1985–2026</h2>
  <div id="series" class="chart"></div>
- <p class="cap">Each dot is one Landsat or Sentinel-2 scene taken at a similar tide (−2.45 to −1.80 m). The value is the LiDAR height at the detected water edge minus the predicted tide, so 0 means the water was exactly where the tide model said. The star is the re-fitted 1940 photo (frame 78) at the north end of Woolacombe Sand.</p>
+ <p class="cap">Each dot is one Landsat or Sentinel-2 image taken at the same point in the tide cycle as the 1940 photos: 70–110 minutes after low water on a rising tide, with a tide range within 1.5 m of 1940’s (Ilfracombe range 6.8 m, a mid-range tide between springs and neaps). The value is the LiDAR height at the detected water edge minus the predicted tide, so 0 means the water was exactly where the tide model said. The star is the 1940 photo (frame 78) at the north end of Woolacombe Sand.</p>
  <div id="stats"></div>
 </section>
 <section id="story">
@@ -45,9 +45,9 @@
  <h3>Method and limits</h3>
  <ul>
   <li><b>Tides:</b> UTide harmonic fits to 2019 hourly data from Ilfracombe and Devonport (GESLA-4.1), converted to ODN. Tested against an independent 2018 fortnight at Ilfracombe: 0.20 m rms overall, 0.11 m near low water. A fit to Newlyn's 1940 record reproduces it to 0.13 m. The −0.17 m Newlyn surge was applied to all frames.</li>
-  <li><b>Photos:</b> fitted to the British National Grid by feature matching (SIFT and RANSAC homographies). Typical accuracy is about 5.5 m rms; frame 76 is about 11 m. A homography treats the ground as flat, so cliff tops can be displaced. Frames 2–8, 70–72 and 75 could not be fitted automatically and are not shown on the map. Frames 80, 82, 83, 119, 120 and 122 have interpolated times (marked ≈).</li>
+  <li><b>Photos:</b> frames 78 and 80–82 (Woolacombe to Saunton) are placed with a camera model: the camera was tilted about 12° to the west-south-west, and each photo is draped over the LiDAR terrain and pinned to thousands of matched points on fixed features. Points left out of the fit are typically 3–5 m off on frames 78 and 80, about 5–7 m on frame 81 and about 10 m on frame 82 (mostly dunes). The other frames use a simpler flat fit and can be tens of metres out locally. Frames 2–8, 70–72 and 75 could not be fitted automatically and are not shown on the map. Frames 80, 82, 83, 119, 120 and 122 have interpolated times (marked ≈).</li>
   
-  <li><b>Satellite base map:</b> Sentinel-2 on 27 Sep 2018 at 12:21 BST, when the tide was −2.18 m at Woolacombe and −1.13 m at Plymouth: a similar point in the tide to 1940, 78 years later. It has 10 m pixels.</li>
+  <li><b>Satellite base map:</b> chosen for the same point in the tide cycle as 1940, not just the same height. The 1940 Woolacombe and Saunton frames were taken about 90 minutes after low water on a rising tide (Ilfracombe range 6.8 m). The north base map is Sentinel-2 on 24 Apr 2021 at 12:21 BST: 100 minutes after low water, rising, range 6.6 m, tide −1.81 m. The 1940 Rame frames were about 112 minutes after low water (Devonport range 3.6 m). The south base map is Sentinel-2 on 1 Dec 2017 at 11:24 GMT: 112 minutes after low water, rising, range 3.6 m. It has 10 m pixels.</li>
  </ul>
 </section>
 <section id="sources">
