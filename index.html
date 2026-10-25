@@ -1,17 +1,16 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Devon coast, 31 August 1940: tide and sea level from a Luftwaffe sortie</title>
-<meta name="description" content="Luftwaffe reconnaissance photos of the Devon coast, timed to the minute, georeferenced against modern LiDAR and satellite imagery.">
+<title>Woolacombe and Saunton, 31 August 1940: tide and sea level from a Luftwaffe sortie</title>
+<meta name="description" content="Luftwaffe reconnaissance photos of Woolacombe and Saunton, timed to the minute, georeferenced against modern LiDAR and satellite imagery.">
 <link rel="stylesheet" href="lib/leaflet.css"><link rel="stylesheet" href="style.css">
 </head><body>
-<header><h1>The Devon coast at 12:44 BST, 31 August 1940</h1><p>Luftwaffe sortie GX 10006 SD, timed to the minute, set against today's tide, LiDAR and satellites</p></header>
+<header><h1>Woolacombe and Saunton at 12:44 BST, 31 August 1940</h1><p>Four Luftwaffe photos, timed to the minute, set against today's tide, LiDAR and satellites</p></header>
 <main>
 <section id="mapwrap">
  <div id="map"></div>
  <div id="ctrl">
-  <div class="row"><b>Area</b> <button data-go="north">Woolacombe &amp; Saunton</button> <button data-go="south">Plymouth Sound &amp; Rame</button></div>
   <div class="row"><b>Modern base</b>
-   <label><input type="radio" name="base" value="s2t" checked> Sentinel-2, 24 Apr 2021 (north) / 1 Dec 2017 (south), same point in the tide as 1940</label>
+   <label><input type="radio" name="base" value="s2t" checked> Sentinel-2, 24 Apr 2021, same point in the tide as 1940</label>
    <label><input type="radio" name="base" value="eox"> Sentinel-2 cloudless 2016</label>
    <label><input type="radio" name="base" value="osm"> OpenStreetMap</label></div>
   <div class="row"><label for="op"><b>1940 photo opacity</b></label> <input id="op" type="range" min="0" max="100" value="85"></div>
@@ -31,16 +30,17 @@
 </section>
 <section id="story">
  <h2>What this is</h2>
- <p>On 31 August 1940 a German reconnaissance plane photographed the North Devon coast and Plymouth Sound. Each photo shows the camera's clock, so we know the minute each was taken. The Woolacombe photos were taken at about <b>12:44 BST</b>, roughly 90 minutes after low water, with the tide coming in.</p>
+ <p>On 31 August 1940 a German reconnaissance plane photographed the North Devon coast. Each photo shows the camera's clock, so we know the minute each was taken. This site shows the four photos that cover Woolacombe Sand, Croyde and Saunton Sands. They were taken between about <b>12:44 and 12:46 BST</b>, roughly 90 minutes after low water, with the tide coming in.</p>
+ <p class="cap">This is a small side project. It grew out of looking for the Ramson Cliff erratic on the 1940 photos.</p>
  <p>The question: has the sea moved since 1940? Tide gauges show sea level has risen about <b>20 cm</b> since then. These photos let us see what that means on real beaches.</p>
  <h3>What is compared with what</h3>
  <ul>
   <li><b>1940:</b> the German photos, laid on the map at the right place.</li>
-  <li><b>Today:</b> satellite images taken at the <b>same point in the tide cycle</b>: the same time after low water, on a rising tide, and on a tide of similar size (between springs and neaps). The base map is one of these: 24 April 2021 in the north and 1 December 2017 in the south.</li>
+  <li><b>Today:</b> satellite images taken at the <b>same point in the tide cycle</b>: the same time after low water, on a rising tide, and on a tide of similar size (between springs and neaps). The base map is one of these, from 24 April 2021.</li>
   <li><b>Ground heights:</b> Environment Agency LiDAR, a laser survey of the ground. It tells us how high the beach is at the water's edge.</li>
  </ul>
  <h3>How the photos are fitted to the ground</h3>
- <p>The camera was not pointing straight down: it was tilted about 12° to the west-south-west, from about 8 km up. For Woolacombe and Saunton we worked out the camera's position and tilt, laid each photo over the LiDAR ground surface, and pinned it to thousands of fixed features that are still there, such as roads, field corners and buildings. Tested on points left out of the fit, these photos sit within about 3–5 m (about 10 m among the Saunton dunes). Along Marine Drive at Woolacombe, the 1940 road lies within 3 m of today's road. The other photos use a simpler fit and can be tens of metres out in places.</p>
+ <p>The camera was not pointing straight down: it was tilted about 12° to the west-south-west, from about 8 km up. For each photo we worked out the camera's position and tilt, laid each photo over the LiDAR ground surface, and pinned it to thousands of fixed features that are still there, such as roads, field corners and buildings. Tested on points left out of the fit, these photos sit within about 3–5 m (about 10 m among the Saunton dunes). Along Marine Drive at Woolacombe, the 1940 road lies within 3 m of today's road.</p>
  <h3>Why the same tide height isn't enough</h3>
  <p>It is tempting to compare 1940 with any modern image taken when the tide was at the same height. That is not enough. A Sentinel-2 image from 27 September 2018 caught the sea at almost exactly the 1940 height, but the tide was <b>falling</b>, 100 minutes <b>before</b> low water, on a big spring tide (range 8.3 m). In 1940 the tide was <b>rising</b>, about 90 minutes <b>after</b> low water, on a mid-sized tide (range 6.8 m).</p>
  <p>On a flat beach like Woolacombe, that matters. A falling tide leaves wet sand and pools behind it, so the edge you see from the air lags the true water level. A rising tide pushes in over drier sand. Bigger tides move faster and push waves further up the beach. Any of these can shift the visible water's edge by more than the 8 m or so that 20 cm of sea-level rise would cause.</p>
@@ -49,17 +49,16 @@
  <h3>What it can and can't show</h3>
  <ul>
   <li><b>Can:</b> what the coast looked like at a known moment in the tide in 1940, side by side with today at the same moment. Use the swipe and opacity sliders to compare.</li>
-  <li><b>Can:</b> on rocky coast like Rame, where the shore hardly moves, show that the 1940 and today's water edges agree to within the fitting accuracy.</li>
   <li><b>Can't:</b> measure the 20 cm rise from the photos. On a gentle beach, 20 cm moves the water edge only about 8 m. Waves, wet sand, and sand that has shifted since 1940 move it by much more. The satellite timeline below shows no measurable trend for the same reason.</li>
   <li><b>Can't:</b> tell wet sand from shallow water on 1940 film. Depending on how it is read, the water edge can move by up to 50 m.</li>
  </ul>
- <p><b>Bottom line:</b> the rise is measured by tide gauges such as Newlyn. The photos show what it looks like on the ground: small on rock, and lost among beach changes on sand.</p>
+ <p><b>Bottom line:</b> the rise is measured by tide gauges such as Newlyn. The photos show what the coast looked like: on these sandy beaches the rise is lost among the beach's own changes.</p>
  <h3>Method details</h3>
  <ul>
-  <li><b>Tides:</b> predicted from a year of modern tide-gauge data at Ilfracombe and Devonport, checked against Newlyn's real 1940 record. That afternoon the sea ran about 17 cm below the prediction, probably because of the weather, so this is allowed for. At Woolacombe at 12:44 the sea stood at about −2.5 m relative to Ordnance Datum Newlyn.</li>
-  <li><b>Times:</b> the German clocks ran one hour ahead of British Summer Time. Frames marked ≈ have times estimated from their neighbours.</li>
+  <li><b>Tides:</b> predicted from a year of modern tide-gauge data at Ilfracombe, checked against Newlyn's real 1940 record. That afternoon the sea ran about 17 cm below the prediction, probably because of the weather, so this is allowed for. At Woolacombe at 12:44 the sea stood at about −2.5 m relative to Ordnance Datum Newlyn.</li>
+  <li><b>Times:</b> the German clocks ran one hour ahead of British Summer Time. Frames marked ≈ have times estimated from neighbouring frames whose clocks can be read.</li>
   <li><b>Satellite timeline:</b> Landsat and Sentinel-2 images from 1985 to 2023, kept only if taken 70–110 minutes after low water on a rising tide of similar size to 1940. For each, we find the water's edge and read the ground height there from the LiDAR.</li>
-  <li><b>Not shown:</b> frames 2–8, 70–72 and 75 could not be fitted.</li>
+  <li><b>Photos:</b> frames 78, 80, 81 and 82 of the sortie. Its other frames are not included.</li>
  </ul>
 </section>
 <section id="sources">
