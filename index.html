@@ -30,7 +30,7 @@
  <div id="framecard" class="card">Tap a footprint or a dot on the tide chart.</div>
  <h2>Waterline timeline 1985–2026</h2>
  <div id="series" class="chart"></div>
- <p class="cap">Each dot is one Landsat or Sentinel-2 scene taken at a similar tide (−2.45 to −1.80 m). The value is the LiDAR height at the detected water edge minus the predicted tide, so 0 means the water was exactly where the tide model said. Stars are the 1940 Woolacombe photo at three water-edge thresholds.</p>
+ <p class="cap">Each dot is one Landsat or Sentinel-2 scene taken at a similar tide (−2.45 to −1.80 m). The value is the LiDAR height at the detected water edge minus the predicted tide, so 0 means the water was exactly where the tide model said. The star is the re-fitted 1940 photo (frame 78) at the north end of Woolacombe Sand.</p>
  <div id="stats"></div>
 </section>
 <section id="story">
@@ -41,7 +41,8 @@
  <h3>What it shows, honestly</h3>
  <ul>
   <li>On a gently sloping beach like Woolacombe, 20 cm of rise should move the waterline only about <b>8 m</b> landward (about 20 m at Saunton). On the rocky coast at Rame, the 1940 and today lines are 1–2 m apart, which is smaller than the 5–6 m accuracy of fitting the photos to the map.</li>
-  <li>The 1940 water edge at Woolacombe falls inside the spread of 40 years of satellite waterlines taken at the same tide. Along the beach it is up to about 100 m seaward at the south end and landward at the north end, which looks like sand being redistributed over 80 years. That change is much bigger than the sea-level signal.</li>
+  <li><b>Re-fitted Woolacombe (frame 78).</b> The first whole-frame fit was 100–300 m out locally, so roads and houses did not line up. Frame 78 has now been pinned to today's imagery with 356 points on fixed features: hedge and field corners, lanes, road junctions, the seafront road and the rock reefs at Barricane. When whole 200 m blocks of points are held out of the fit, they miss by 3.7 m RMS. Against the Ordnance Survey 25-inch map of about 1904, the roads agree to within roughly 5 m. Only the area those points support is shown at this accuracy. Frames 76 and 79 are hidden there because they still use the rough whole-frame fit, and frame 77 is not used.</li>
+  <li>With the new fit, the 1940 water edge at the north end of Woolacombe Sand sits at about <b>−2.7 m</b> on today's LiDAR beach. That is within about 0.2 m of the predicted 1940 tide (−2.5 m), and within about 6 m of where today's beach meets that level. Further south the beach is too far from any fixed point to measure at that accuracy. The earlier figures (+0.03 / +0.28 / +0.65 m, and a shift of up to 100 m along the beach) came from the misaligned fit and have been withdrawn.</li>
   <li>On 1940 film, wet sand and shallow water look alike. Depending on the threshold, the picked water edge moves by up to 50 m.</li>
   <li><b>Bottom line:</b> the photos are consistent with the measured 20 cm rise but cannot prove it on their own. The proof comes from tide gauges such as Newlyn. The photos show what that rise means on the ground: small on rock, and lost among beach changes on sand.</li>
  </ul>

@@ -22,7 +22,7 @@ document.querySelectorAll('input[name=base]').forEach(r=>r.onchange=()=>{map.rem
 map.attributionControl.addAttribution('1940 photos: <a href="https://catalog.archives.gov/id/214920619" target="_blank" rel="noopener noreferrer">U.S. National Archives, RG 373</a> · LiDAR © Environment Agency (OGL)');
 map.createPane('p1940').style.zIndex=410;map.createPane('pc').style.zIndex=420;
 const pane=map.getPane('p1940');
-const photos=all.filter(f=>f.geo).map(f=>L.imageOverlay('img/f'+f.n+'.webp',f.geo.bounds,{pane:'p1940',opacity:.85}).addTo(map));
+const photos=all.filter(f=>f.geo).sort((a,b)=>(a.geo.tps?1:0)-(b.geo.tps?1:0)).map(f=>L.imageOverlay('img/f'+f.n+'.webp',f.geo.bounds,{pane:'p1940',opacity:.85}).addTo(map));
 document.getElementById('op').oninput=e=>photos.forEach(p=>p.setOpacity(e.target.value/100));
 const swEl=document.getElementById('sw');
 function clip(){const p=swEl.value/100,nw=map.containerPointToLayerPoint([0,0]),se=map.containerPointToLayerPoint(map.getSize());const x=nw.x+(se.x-nw.x)*p;pane.style.clip=p>=1?'auto':`rect(${nw.y}px, ${x}px, ${se.y}px, ${nw.x}px)`;}
@@ -73,5 +73,5 @@ function hl(n){Object.entries(dots).forEach(([k,c])=>c.setAttribute('r',+k===n?7
  [['● Sentinel-2','#333'],['□ Landsat','#333'],['Woolacombe','#1d6fb8'],['Saunton','#2a9d58'],['★ 1940 photo','#e3262b']].forEach(([t,c],i)=>el('text',{x:m.l+6+i*80,y:m.t+10,'font-size':10,fill:c},svg).textContent=t);})();
 document.getElementById('stats').innerHTML=`<table><tr><th>Site</th><th>Median (IQR)</th><th>Trend 1985–2026</th></tr>
 <tr><td>Woolacombe</td><td>−0.16 (−0.32 to 0.00) m</td><td>−2.4 ± 3.7 mm/yr</td></tr><tr><td>Saunton</td><td>−0.02 (−0.14 to +0.22) m</td><td>−5.1 ± 3.7 mm/yr</td></tr>
-<tr><td>Woolacombe 1940</td><td>+0.03 / +0.28 / +0.65 m</td><td>3 thresholds</td></tr></table><p class="cap">No measurable trend: a real rise of about 3 mm/yr is swamped by waves, beach changes and 10–30 m pixels.</p>`;
+<tr><td>Woolacombe 1940 (frame 78, re-fitted)</td><td>−0.19 (−0.41 to +0.15) m</td><td>north end of the beach only</td></tr></table><p class="cap">No measurable trend: a real rise of about 3 mm/yr is swamped by waves, beach changes and 10–30 m pixels.</p>`;
 })();
