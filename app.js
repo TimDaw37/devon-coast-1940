@@ -20,18 +20,13 @@ const base={
 let cur=base.s2t.addTo(map);
 document.querySelectorAll('input[name=base]').forEach(r=>r.onchange=()=>{map.removeLayer(cur);cur=base[r.value].addTo(map);});
 map.attributionControl.addAttribution('1940 photos: <a href="https://catalog.archives.gov/id/214920619" target="_blank" rel="noopener noreferrer">U.S. National Archives, RG 373</a> · LiDAR © Environment Agency (OGL)');
-map.createPane('p1940').style.zIndex=410;map.createPane('pc').style.zIndex=420;
+map.createPane('p1940').style.zIndex=410;
 const pane=map.getPane('p1940');
 const photos=all.filter(f=>f.geo).sort((a,b)=>(a.geo.tps?1:0)-(b.geo.tps?1:0)).map(f=>L.imageOverlay('img/f'+f.n+'.webp',f.geo.bounds,{pane:'p1940',opacity:.85}).addTo(map));
 document.getElementById('op').oninput=e=>photos.forEach(p=>p.setOpacity(e.target.value/100));
 const swEl=document.getElementById('sw');
 function clip(){const p=swEl.value/100,nw=map.containerPointToLayerPoint([0,0]),se=map.containerPointToLayerPoint(map.getSize());const x=nw.x+(se.x-nw.x)*p;pane.style.clip=p>=1?'auto':`rect(${nw.y}px, ${x}px, ${se.y}px, ${nw.x}px)`;}
 swEl.oninput=clip;map.on('move zoom moveend zoomend',clip);
-// contours
-const col={y1940:'#e3262b',today:'#f5d000',odn0:'#2f7fe0'},cl={};
-fetch('data/contours.geojson').then(r=>r.json()).then(g=>{Object.keys(col).forEach(k=>{cl[k]=L.geoJSON(g,{pane:'pc',filter:f=>f.properties.kind===k,style:{color:col[k],weight:2.2,opacity:.95},
- onEachFeature:(f,l)=>l.bindTooltip(({y1940:'1940 water level',today:'same tide today (+0.20 m)',odn0:'0 m ODN'})[k]+' · '+f.properties.elev+' m ODN',{sticky:true,className:'ft'})});});
- document.querySelectorAll('input[data-c]').forEach(c=>{const f=()=>c.checked?cl[c.dataset.c].addTo(map):map.removeLayer(cl[c.dataset.c]);c.onchange=f;f();});});
 // footprints
 const fpG=L.layerGroup().addTo(map),fpL={};
 all.filter(f=>f.geo).forEach(f=>{const pg=L.polygon(f.geo.foot.map(p=>[p[1],p[0]]),{color:'#fff',weight:1.5,dashArray:'4 4',fill:true,fillOpacity:0,interactive:true}).bindTooltip(label(f),{sticky:true,className:'ft'}).on('click',()=>show(f));pg.addTo(fpG);fpL[f.n]=pg;});

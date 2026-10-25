@@ -16,11 +16,7 @@
    <label><input type="radio" name="base" value="osm"> OpenStreetMap</label></div>
   <div class="row"><label for="op"><b>1940 photo opacity</b></label> <input id="op" type="range" min="0" max="100" value="85"></div>
   <div class="row"><label for="sw"><b>Swipe</b> (1940 on the left)</label> <input id="sw" type="range" min="0" max="100" value="100"></div>
-  <div class="row"><b>LiDAR contours</b>
-   <label><input type="checkbox" data-c="y1940" checked> <i class="sw r"></i>1940 water level</label>
-   <label><input type="checkbox" data-c="today" checked> <i class="sw y"></i>same tide today (+0.20 m)</label>
-   <label><input type="checkbox" data-c="odn0"> <i class="sw b"></i>0 m ODN</label>
-   <label><input type="checkbox" id="fp" checked> footprints</label></div>
+  <div class="row"><label><input type="checkbox" id="fp" checked> footprints</label></div>
  </div>
 </section>
 <section id="panel">
@@ -37,11 +33,11 @@
  <h2>The story</h2>
  <p>On the afternoon of 31 August 1940, a Luftwaffe reconnaissance aircraft flew along the Devon coast taking vertical photographs. Each frame shows the camera's clock. The clock ran on German summer time, one hour ahead of British Summer Time, so the frame of Woolacombe Sands reading 13:44 was taken at <b>12:44 BST</b>.</p>
  <p>Knowing the minute lets us work out the tide. Low water that day was about 11:15 BST at Ilfracombe and 11:05 BST at Devonport. Every coastal frame therefore caught a tide that was rising by 1–2 cm a minute. The prediction comes from a full year of modern tide-gauge data. It is checked against Newlyn's real hourly record from 1940, which also shows the sea that afternoon running about 17 cm below the prediction, probably because of the weather. At Woolacombe at 12:44 the sea stood at about <b>−2.5 m</b> relative to Ordnance Datum.</p>
- <p>Since 1940, mean sea level at Newlyn has risen about <b>20 cm</b> (about 2 mm a year). Fitting the photos to modern Environment Agency LiDAR lets us draw where the water would reach at the same point in the tide today: the yellow line.</p>
+ <p>Since 1940, mean sea level at Newlyn has risen about <b>20 cm</b> (about 2 mm a year). Fitting the photos to modern Environment Agency LiDAR lets us estimate where the water would reach at the same point in the tide today.</p>
  <h3>What it shows, honestly</h3>
  <ul>
   <li>On a gently sloping beach like Woolacombe, 20 cm of rise should move the waterline only about <b>8 m</b> landward (about 20 m at Saunton). On the rocky coast at Rame, the 1940 and today lines are 1–2 m apart, which is smaller than the 5–6 m accuracy of fitting the photos to the map.</li>
-  <li><b>Re-fitted Woolacombe (frame 78).</b> The first whole-frame fit was 100–300 m out locally, so roads and houses did not line up. Frame 78 has now been pinned to today's imagery with 356 points on fixed features: hedge and field corners, lanes, road junctions, the seafront road and the rock reefs at Barricane. When whole 200 m blocks of points are held out of the fit, they miss by 3.7 m RMS. Against the Ordnance Survey 25-inch map of about 1904, the roads agree to within roughly 5 m. Only the area those points support is shown at this accuracy. Frames 76 and 79 are hidden there because they still use the rough whole-frame fit, and frame 77 is not used.</li>
+  <li><b>Re-fitted Woolacombe (frame 78).</b> The first whole-frame fit was 100–300 m out locally, so roads and houses did not line up. The photo turned out to be slightly oblique: solving for the camera gives a tilt of about <b>12.5°</b> towards the west-south-west, from about 8.9 km up, which is why a fit pinned around the village drifted further south. Frame 78 is now orthorectified: the camera model drapes the photo over the Environment Agency LiDAR terrain, a light smooth correction is fitted to 585 fixed points across the whole bay, and a final light correction uses Marine Drive itself. Checked every 100 m along Marine Drive from the village to the end of the road above Putsborough, the 1940 road sits within 3 m of today's road across the road, even when each 100 m section is left out of the correction. Frames 76 and 79 are hidden under frame 78 because they still use the rough whole-frame fit, and frame 77 is not used.</li>
   <li>With the new fit, the 1940 water edge at the north end of Woolacombe Sand sits at about <b>−2.7 m</b> on today's LiDAR beach. That is within about 0.2 m of the predicted 1940 tide (−2.5 m), and within about 6 m of where today's beach meets that level. Further south the beach is too far from any fixed point to measure at that accuracy. The earlier figures (+0.03 / +0.28 / +0.65 m, and a shift of up to 100 m along the beach) came from the misaligned fit and have been withdrawn.</li>
   <li>On 1940 film, wet sand and shallow water look alike. Depending on the threshold, the picked water edge moves by up to 50 m.</li>
   <li><b>Bottom line:</b> the photos are consistent with the measured 20 cm rise but cannot prove it on their own. The proof comes from tide gauges such as Newlyn. The photos show what that rise means on the ground: small on rock, and lost among beach changes on sand.</li>
@@ -50,7 +46,7 @@
  <ul>
   <li><b>Tides:</b> UTide harmonic fits to 2019 hourly data from Ilfracombe and Devonport (GESLA-4.1), converted to ODN. Tested against an independent 2018 fortnight at Ilfracombe: 0.20 m rms overall, 0.11 m near low water. A fit to Newlyn's 1940 record reproduces it to 0.13 m. The −0.17 m Newlyn surge was applied to all frames.</li>
   <li><b>Photos:</b> fitted to the British National Grid by feature matching (SIFT and RANSAC homographies). Typical accuracy is about 5.5 m rms; frame 76 is about 11 m. A homography treats the ground as flat, so cliff tops can be displaced. Frames 2–8, 70–72 and 75 could not be fitted automatically and are not shown on the map. Frames 80, 82, 83, 119, 120 and 122 have interpolated times (marked ≈).</li>
-  <li><b>Contours:</b> Environment Agency LiDAR Composite DTM, 2 m. Levels: north −2.49 / −2.29 / 0 m; south −0.94 / −0.74 / 0 m ODN, which are the mean best-estimate 1940 levels for each set of frames. Today's LiDAR shows today's beach, not the 1940 one.</li>
+  
   <li><b>Satellite base map:</b> Sentinel-2 on 27 Sep 2018 at 12:21 BST, when the tide was −2.18 m at Woolacombe and −1.13 m at Plymouth: a similar point in the tide to 1940, 78 years later. It has 10 m pixels.</li>
  </ul>
 </section>
